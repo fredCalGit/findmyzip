@@ -2,12 +2,11 @@ import { gql } from "apollo-server";
 
 export const typeDefs = gql`
   type Location {
-    postalCode: String
+    postCode: String
     country: String
     countryAbbreviation: String
     places: [Place]
   }
-
   type Place {
     placeName: String
     state: String
@@ -15,8 +14,7 @@ export const typeDefs = gql`
     longitude: String
     latitude: String
   }
-
   type Query {
-    location(country: String, postalCode: String): Location
+    location(country: String, postCode: String): Location
   }
 `;
