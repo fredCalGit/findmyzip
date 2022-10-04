@@ -9,7 +9,7 @@ export const Header = () => {
 
   return (
     <CardHeader
-      title="whereZip"
+      title="findMyZip"
       action={
         <IconButton
           sx={{ ml: 1 }}
@@ -19,6 +19,6 @@ export const Header = () => {
           {theme.palette.mode === "dark" ? <Brightness7 /> : <Brightness4 />}
         </IconButton>
       }
-    ></CardHeader>
+    />
   );
 };

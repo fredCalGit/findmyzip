@@ -15,21 +15,19 @@ import {
   Typography,
 } from "@mui/material";
 
-interface SearchTabsProps {
+export interface SearchTabsProps {
   data: {
     location: {
       country: string;
       countryAbbreviation: string;
       postCode: string;
-      places: [
-        {
-          placeName: string;
-          state: string;
-          stateAbbreviation: string;
-          latitude: string;
-          longitude: string;
-        }
-      ];
+      places: {
+        placeName: string;
+        state: string;
+        stateAbbreviation: string;
+        latitude: string;
+        longitude: string;
+      }[];
     };
   };
   cachedVariables?: { country: string; postCode: string }[] | null;
