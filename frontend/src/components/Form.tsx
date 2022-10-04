@@ -35,7 +35,13 @@ export const Form = ({ handleSubmit }: FormProps) => {
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "row" }}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-around",
+      }}
+    >
       <Autocomplete
         disablePortal
         id="country-input"

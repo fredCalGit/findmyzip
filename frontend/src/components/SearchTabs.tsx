@@ -79,49 +79,45 @@ export const SearchTabs = ({
         margin: "20px",
       }}
     >
-      <Tabs
-        orientation="vertical"
-        variant="scrollable"
-        value={value}
-        onChange={handleChange}
-        aria-label="Vertical tabs example"
-        sx={{ borderRight: 1, borderColor: "divider" }}
-      >
-        {data ? (
-          <Tab
-            key={`${data.location.country}-${data.location.postCode}`}
-            label={`Search #${value + 1}`}
-            {...a11yProps(value)}
-          />
-        ) : (
-          <Skeleton />
-        )}
-      </Tabs>
+      {data?.location && (
+        <>
+          <Tabs
+            orientation="vertical"
+            variant="scrollable"
+            value={value}
+            onChange={handleChange}
+            aria-label="Vertical tabs example"
+            sx={{ borderRight: 1, borderColor: "divider" }}
+          >
+            <Tab
+              key={`${data.location.country}-${data.location.postCode}`}
+              label={`Search #${value + 1}`}
+              {...a11yProps(value)}
+            />
+          </Tabs>
 
-      {data ? (
-        <TabPanel value={value} index={value}>
-          <Typography variant="h5">
-            {data.location.country}, {data.location.countryAbbreviation}
-          </Typography>
-          <Typography>Zip Code: {data.location.postCode}</Typography>
-          <br />
-          {data.location.places.map((place, index) => {
-            return (
-              <Card>
-                <CardHeader title={place.placeName} />
-                <CardContent>
-                  <Typography>
-                    {place.state}, {place.stateAbbreviation}
-                  </Typography>
-                  <Typography>Latitude: {place.latitude}</Typography>
-                  <Typography>Longitude: {place.longitude}</Typography>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </TabPanel>
-      ) : (
-        <Skeleton />
+          <TabPanel value={value} index={value}>
+            <Typography variant="h5">
+              {data.location.country}, {data.location.countryAbbreviation}
+            </Typography>
+            <Typography>Zip Code: {data.location.postCode}</Typography>
+            <br />
+            {data.location.places.map((place, index) => {
+              return (
+                <Card>
+                  <CardHeader title={place.placeName} />
+                  <CardContent>
+                    <Typography>
+                      {place.state}, {place.stateAbbreviation}
+                    </Typography>
+                    <Typography>Latitude: {place.latitude}</Typography>
+                    <Typography>Longitude: {place.longitude}</Typography>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </TabPanel>
+        </>
       )}
     </Box>
   );

@@ -1,3 +1,4 @@
+import { ApolloError } from "./errors";
 import { InputArgs, LocationResult, PlaceResult } from "./types";
 
 export const resolvers = {
@@ -29,8 +30,7 @@ export const resolvers = {
         };
         return response;
       } catch (err) {
-        console.log(err);
-        throw new Error("ZipCode not found!");
+        throw new ApolloError("Error");
       }
     },
   },
