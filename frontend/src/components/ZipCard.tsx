@@ -1,22 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { gql, useQuery } from "@apollo/client";
-import { Card, CardContent, Typography } from "@mui/material";
-
+import { Button, Card, CardActions, CardContent } from "@mui/material";
 import { Form } from "./Form";
 import { Header } from "./Header";
 import { SearchTabs } from "./SearchTabs";
-import { client } from "../graphql";
 
 export const ZipCard = () => {
   const [queryVariables, setQueryVariables] = useState<QueryVariables>({
     country: "US",
-    postCode: "90201",
+    postCode: "0000000",
   });
   const [cachedVariables, setCachedVariables] = useState<
     QueryVariables[] | null
   >(null);
 
-  const { loading, error, data } = useQuery(query, {
+  const { data } = useQuery(query, {
     variables: queryVariables,
     errorPolicy: "all",
   });
@@ -29,18 +27,40 @@ export const ZipCard = () => {
     postCode: string;
   }) => {
     setQueryVariables({ country, postCode });
+
+    if (!cachedVariables) {
+      setCachedVariables([{ country, postCode }]);
+    } else {
+      if (cachedVariables.length >= 5) {
+        cachedVariables.splice(0, 1);
+        setCachedVariables([...cachedVariables, { country, postCode }]);
+      } else {
+        setCachedVariables([...cachedVariables, { country, postCode }]);
+      }
+    }
   };
-  useEffect(() => {
-    console.log(data);
-    //    console.log(client.cache.readQuery({ query,  }));
-  }, [data]);
 
   return (
     <Card sx={{ height: "80vh" }}>
       <Header />
       <CardContent>
         <Form handleSubmit={handleSubmit} />
-        <SearchTabs data={data} />
+        <CardActions>
+          <Button
+            size="small"
+            onClick={() => setCachedVariables(null)}
+            disabled={!cachedVariables}
+            color="error"
+          >
+            Clear History
+          </Button>
+        </CardActions>
+
+        <SearchTabs
+          data={data}
+          cachedVariables={cachedVariables}
+          setQueryVariables={setQueryVariables}
+        />
       </CardContent>
     </Card>
   );
@@ -50,6 +70,7 @@ type QueryVariables = {
   country: string;
   postCode: string;
 };
+
 const query = gql`
   query GetLocations($country: String, $postCode: String) {
     location(country: $country, postCode: $postCode) {
