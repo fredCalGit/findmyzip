@@ -6,12 +6,13 @@ import { Box, Button } from "@mui/material";
 import { SyntheticEvent, useEffect, useState } from "react";
 
 interface FormProps {
-  handleSubmit: React.Dispatch<
-    React.SetStateAction<{
-      country: string;
-      zipCode: string;
-    }>
-  >;
+  handleSubmit: ({
+    country,
+    postCode,
+  }: {
+    country: string;
+    postCode: string;
+  }) => void;
 }
 export const Form = ({ handleSubmit }: FormProps) => {
   const [country, setCountry] = useState("United States");
@@ -66,7 +67,10 @@ export const Form = ({ handleSubmit }: FormProps) => {
         variant="outlined"
         onClick={() => {
           if (zipCode)
-            handleSubmit({ country: getCountryAlias(country), zipCode });
+            handleSubmit({
+              country: getCountryAlias(country),
+              postCode: zipCode,
+            });
         }}
       >
         Search

@@ -9,7 +9,7 @@ export const Header = () => {
 
   return (
     <CardHeader
-      title="Find My Zip!"
+      title="whereZip"
       action={
         <IconButton
           sx={{ ml: 1 }}
