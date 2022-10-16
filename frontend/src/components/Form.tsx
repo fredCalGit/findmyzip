@@ -14,7 +14,10 @@ interface FormProps {
   }) => void;
 }
 export const Form = ({ handleSubmit }: FormProps) => {
-  const [country, setCountry] = useState(countries[65]);
+  const [country, setCountry] = useState({
+    label: "United States",
+    value: "US",
+  });
   const [zipCode, setZipCode] = useState("");
 
   const isValidUSZip = (zipcode: string) =>
