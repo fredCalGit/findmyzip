@@ -14,23 +14,16 @@ interface FormProps {
   }) => void;
 }
 export const Form = ({ handleSubmit }: FormProps) => {
-  const [country, setCountry] = useState("United States");
+  const [country, setCountry] = useState(countries[65]);
   const [zipCode, setZipCode] = useState("");
 
   const isValidUSZip = (zipcode: string) =>
     /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(zipcode);
 
-  const getCountryAlias = (name: string) => {
-    const result = countries.filter(
-      (country) => country.label.toLowerCase() === name.toLowerCase()
-    );
-    return result[0].value;
-  };
-
-  const handleCountryChange = (newValue: string) => {
-    if (newValue) {
-      setCountry(newValue);
-    }
+  const handleCountryChange = (
+    newValue: { value: string; label: string } | null
+  ) => {
+    newValue && setCountry(newValue);
   };
 
   const handleZipChange = (newValue: string) => {
@@ -47,46 +40,45 @@ export const Form = ({ handleSubmit }: FormProps) => {
     >
       <Autocomplete
         disablePortal
-        id="country-input"
-        options={countries
-          .map((country) => {
-            return country.label;
-          })
-          .sort((a, b) => -b)}
+        id='country-input'
+        options={countries}
         autoHighlight
         sx={{ width: 360 }}
         renderInput={(params) => (
-          <TextField {...params} label="Choose a Country" />
+          <TextField
+            {...params}
+            label='Choose a Country'
+            value={country.label}
+          />
         )}
         value={country}
-        inputValue={country}
         onChange={(event, value) => {
-          if (value) handleCountryChange(value);
+          handleCountryChange(value);
         }}
       />
       <TextField
-        id="zipcode-input"
-        label="Enter Zip-Code"
-        variant="outlined"
+        id='zipcode-input'
+        label='Enter Zip-Code'
+        variant='outlined'
         sx={{ width: 300 }}
         value={zipCode}
         onChange={(event) => handleZipChange(event.target.value)}
       />
       <Button
-        variant="outlined"
+        variant='outlined'
         onClick={() => {
-          if (getCountryAlias(country) === "US") {
+          if (country.value === "US") {
             if (!isValidUSZip(zipCode)) {
               alert("Invalid ZipCode!");
             } else {
               handleSubmit({
-                country: getCountryAlias(country),
+                country: country.value,
                 postCode: zipCode,
               });
             }
           } else if (zipCode)
             handleSubmit({
-              country: getCountryAlias(country),
+              country: country.value,
               postCode: zipCode,
             });
         }}

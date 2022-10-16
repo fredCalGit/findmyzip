@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { gql, useQuery } from "@apollo/client";
 import { Button, Card, CardActions, CardContent } from "@mui/material";
 import { Form } from "./Form";
@@ -6,10 +6,9 @@ import { Header } from "./Header";
 import { SearchTabs } from "./SearchTabs";
 
 export const ZipCard = () => {
-  const [queryVariables, setQueryVariables] = useState<QueryVariables>({
-    country: "US",
-    postCode: "0000000",
-  });
+  const [queryVariables, setQueryVariables] = useState<QueryVariables | null>(
+    null
+  );
   const [cachedVariables, setCachedVariables] = useState<
     QueryVariables[] | null
   >(null);
@@ -47,10 +46,11 @@ export const ZipCard = () => {
         <Form handleSubmit={handleSubmit} />
         <CardActions>
           <Button
-            size="small"
+            size='small'
             onClick={() => setCachedVariables(null)}
             disabled={!cachedVariables}
-            color="error"
+            color='error'
+            variant='outlined'
           >
             Clear History
           </Button>

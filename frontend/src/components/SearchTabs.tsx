@@ -32,7 +32,7 @@ export interface SearchTabsProps {
   };
   cachedVariables?: { country: string; postCode: string }[] | null;
   setQueryVariables: Dispatch<
-    SetStateAction<{ country: string; postCode: string }>
+    SetStateAction<{ country: string; postCode: string } | null>
   >;
 }
 
@@ -48,12 +48,12 @@ export const SearchTabs = ({
   };
   return (
     <Box sx={{ width: "100%" }}>
-      {cachedVariables && (
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        {cachedVariables && (
           <Tabs
-            value={cachedVariables.length - 1 || 0}
+            value={cachedVariables.length > 0 ? cachedVariables.length - 1 : 0}
             onChange={handleChange}
-            aria-label="basic tabs example"
+            aria-label='basic tabs example'
           >
             {data ? (
               cachedVariables &&
@@ -73,8 +73,9 @@ export const SearchTabs = ({
               <Skeleton />
             )}
           </Tabs>
-        </Box>
-      )}
+        )}
+      </Box>
+
       {data ? (
         cachedVariables &&
         cachedVariables.map((item, index) => {
@@ -86,16 +87,16 @@ export const SearchTabs = ({
             >
               {data.location ? (
                 <>
-                  <Typography variant="h5">
+                  <Typography variant='h5'>
                     Country: {data.location.country} -{" "}
                     {data.location.countryAbbreviation}
                   </Typography>
-                  <Typography variant="h5">
+                  <Typography variant='h5'>
                     ZipCode: {data.location.postCode}
                   </Typography>
                 </>
               ) : (
-                <Typography color="error" variant="h5">
+                <Typography color='error' variant='h5'>
                   Zip Code not found!
                 </Typography>
               )}
@@ -116,7 +117,7 @@ export const SearchTabs = ({
                   );
                 })
               ) : (
-                <Typography color="error">Enter Valid Zip Code!</Typography>
+                <Typography color='error'>Enter Valid Zip Code!</Typography>
               )}
             </TabPanel>
           );
@@ -138,7 +139,7 @@ function TabPanel(props: TabPanelProps) {
 
   return (
     <div
-      role="tabpanel"
+      role='tabpanel'
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}

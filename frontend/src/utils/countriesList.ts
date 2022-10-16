@@ -47,6 +47,7 @@ const countries = [
   { label: "Mexico", value: "MX" },
   { label: "Malaysia", value: "MY" },
   { label: "Holland", value: "NL" },
+  { label: "Mayotte", value: "YT" },
   { label: "Norway", value: "NO" },
   { label: "New Zealand", value: "NZ" },
   { label: "Phillippines", value: "PH" },
@@ -62,13 +63,12 @@ const countries = [
   { label: "Svalbard & Jan Mayen Islands", value: "SJ" },
   { label: "Slovak Republic", value: "SK" },
   { label: "San Marino", value: "SM" },
+  { label: "South Africa", value: "ZA" },
   { label: "Thailand", value: "TH" },
   { label: "Turkey", value: "TR" },
   { label: "United States", value: "US" },
   { label: "Vatican", value: "VA" },
   { label: "Virgin Islands", value: "VI" },
-  { label: "Mayotte", value: "YT" },
-  { label: "South Africa", value: "ZA" },
 ];
 
 export default countries;
